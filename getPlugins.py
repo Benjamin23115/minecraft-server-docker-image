@@ -82,3 +82,11 @@ instantRestockURL = "https://github.com/spartacus04/InstantRestock/releases/late
 instantRestockDownloadURL = "https://github.com/spartacus04/InstantRestock/releases"
 
 download_plugin("instantRestock", getLatestJarURL(instantRestockURL, instantRestockDownloadURL, "InstantRestock-{text}.jar"))
+
+#Geyser for cross-platform connections
+geyserURL = "https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot"
+download_plugin("Geyser", geyserURL)
+
+#Floodgate to allow Geysers connections to join online-mode server
+FloodgateURL = "https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot"
+download_plugin("Floodgate", FloodgateURL)
