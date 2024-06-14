@@ -65,4 +65,5 @@ WORKDIR /data
 
 #Xms: Initial memory allocation pool size
 #Xmx: Maximum memory allocation pool size
-CMD ["java", "-Xms1G", "-Xmx6G", "-jar", "/opt/minecraft/paperspigot.jar"]
+# -Dcom.mojang.eula.agree=true: Automtically accept EULA
+CMD ["java", "-Dcom.mojang.eula.agree=true", "-Xms1G", "-Xmx6G", "-jar", "/opt/minecraft/paperspigot.jar"]
