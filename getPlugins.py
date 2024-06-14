@@ -47,7 +47,7 @@ for index in indices:
 # ViaBackwards + Version for cross-version compatibility
 viaBackwardsURL = "https://github.com/ViaVersion/ViaBackwards/releases/latest"
 viaBackwardsDownloadURL = "https://github.com/ViaVersion/ViaBackwards/releases"
-download_plugin("viaVersion", getLatestJarURL(viaBackwardsURL, viaBackwardsDownloadURL, "viaBackwards-{text}.jar"))
+download_plugin("viaBackwards", getLatestJarURL(viaBackwardsURL, viaBackwardsDownloadURL, "viaBackwards-{text}.jar"))
 
 viaVersionURL = "https://github.com/ViaVersion/ViaVersion/releases/latest"
 viaVersionDownloadURL = "https://github.com/ViaVersion/ViaVersion/releases"
