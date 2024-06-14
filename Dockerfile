@@ -65,4 +65,4 @@ WORKDIR /data
 
 #Xms: Initial memory allocation pool size
 #Xmx: Maximum memory allocation pool size
-CMD ["java", "-Xms1G", "-Xmx6G", "-jar", "/opt/minecraft/paperspigot.jar"]
+CMD ["java", "-Xms1G", "-Xmx6G", "-Dcom.mojang.eula.agree=true" "-jar", "/opt/minecraft/paperspigot.jar"]
