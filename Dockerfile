@@ -21,14 +21,12 @@ WORKDIR /opt/minecraft
 # Copy all Python scripts from your local directory to the Docker image
 COPY *.py ./
 
-# Make scripts executable (if needed)
+# Make scripts executable
 RUN chmod +x *.py
+RUN chmod +x .sh
 
 # Run getPaperServer.py to download Paper with API
 RUN python3 /opt/minecraft/getPaperServer.py
-
-# Run getPlugins.py to download plugins
-RUN python3 /opt/minecraft/getPlugins.py
 
 ########################################################
 ############## Runtime Stage ############################
@@ -42,8 +40,12 @@ WORKDIR /data
 # Copy built jar from the build stage
 COPY --from=build /opt/minecraft/minecraftspigot.jar /opt/minecraft/paperspigot.jar
 
-# Copy plugin jars from the build stage
-COPY --from=build /opt/minecraft/plugins/*.jar /data/plugins/
+# Copy Python scripts for plugins from the build stage
+COPY --from=build /opt/minecraft/getGitHubPlugins.py /opt/minecraft/
+COPY --from=build /opt/minecraft/getPlugins.py /opt/minecraft/
+
+# Copy Shell start script
+COPY --from=build /opt/minecraft/startScript.sh /opt/minecraft/
 
 # Install rcon-cli
 ARG RCON_CLI_VER=1.6.7
@@ -66,4 +68,4 @@ WORKDIR /data
 #Xms: Initial memory allocation pool size
 #Xmx: Maximum memory allocation pool size
 # -Dcom.mojang.eula.agree=true: Automtically accept EULA
-CMD ["java", "-Dcom.mojang.eula.agree=true", "-Xms1G", "-Xmx6G", "-jar", "/opt/minecraft/paperspigot.jar"]
+CMD ["./opt/minecraft/startScript.sh"]

@@ -16,6 +16,10 @@ def download_plugin(plugin_name, download_url):
 os.makedirs("plugins", exist_ok=True)
 os.chdir("plugins")
 
+for filename in os.listdir():
+    if filename.endswith(".jar"):
+        os.remove(filename)
+
 # EssentialsX for useful commands
 # Indices of plugins in the Jenkins API response
 indices = [0, 2, 7]
