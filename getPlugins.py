@@ -4,10 +4,6 @@ from getGitHubPlugins import getLatestJarURL
 
 # Function to download plugin
 def download_plugin(plugin_name, download_url):
-    print("-----------------")
-    print(f"Downloading {plugin_name} from {download_url}")
-    print("-----------------")
-
     response = requests.get(download_url)
     if response.status_code == 200:
         with open(f"{plugin_name}.jar", 'wb') as f:
@@ -70,8 +66,8 @@ RIGHT_CLICK_HARVEST_DOWNLOAD_URL = "https://dev.bukkit.org/projects/rightclickha
 download_plugin("rightClickHarvest", RIGHT_CLICK_HARVEST_DOWNLOAD_URL)
 
 # Sleep Most for QOL day-night cycles
-SLEEP_MOST_DOWNLOAD_URL = "https://www.spigotmc.org/resources/sleep-most-1-8-1-20-x-the-most-advanced-sleep-plugin-available-percentage-animations.60623/download?version=528694"
-download_plugin("sleepMost", SLEEP_MOST_DOWNLOAD_URL)
+# SLEEP_MOST_DOWNLOAD_URL = "https://www.spigotmc.org/resources/sleep-most-1-8-1-20-x-the-most-advanced-sleep-plugin-available-percentage-animations.60623/download?version=528694"
+# download_plugin("sleepMost", SLEEP_MOST_DOWNLOAD_URL)
 
 # Cristichi's Tree Capitator for QOL Tree chopping
 CRIS_TREE_CAPITATOR_DOWNLOAD_URL = "https://dev.bukkit.org/projects/cristichis-tree-capitator/files/latest"
@@ -81,7 +77,7 @@ download_plugin("cris-tree-capitator", CRIS_TREE_CAPITATOR_DOWNLOAD_URL)
 instantRestockURL = "https://github.com/spartacus04/InstantRestock/releases/latest"
 instantRestockDownloadURL = "https://github.com/spartacus04/InstantRestock/releases"
 
-download_plugin("instantRestock", getLatestJarURL(instantRestockURL, instantRestockDownloadURL, "InstantRestock-{text}.jar"))
+download_plugin("instantRestock", getLatestJarURL(instantRestockURL, instantRestockDownloadURL, "instantrestock_{text}.jar"))
 
 #Geyser for cross-platform connections
 geyserURL = "https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot"
