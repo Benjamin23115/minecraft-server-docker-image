@@ -1,16 +1,19 @@
 import requests
+from bs4 import BeautifulSoup
+import re
 
 def getPaperVersion():
-    url = "https://papermc.io/_next/data/S0cVqMWrriHKW0xvV3HXs/downloads/all.json"
+    paperWebsite ="https://papermc.io/downloads/paper"
     try:
-        response = requests.get(url)
-        response.raise_for_status()  # Raise an exception for HTTP errors
-        data = response.json()
-        
-        # Access the nested JSON structure correctly
-        initial_project_version = data.get('pageProps', {}).get('initialProjectVersion')
-        
-        return initial_project_version
+        response = requests.get(paperWebsite)
+        if response.status_code == 200:
+                soup = BeautifulSoup(response.text, 'html.parser')
+                text = soup.get_text()
+                pattern = re.compile(r'Get Paper\s+(\d+(\.\d+)*)')
+                matches = pattern.findall(text)
+                if matches:
+                    return(matches[0][0])
+
     except requests.exceptions.RequestException as e:
         print(f"Error fetching data: {e}")
         return None
