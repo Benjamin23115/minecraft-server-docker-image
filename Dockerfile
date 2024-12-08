@@ -12,6 +12,7 @@ COPY *.sh ./
 
 # Make scripts executable
 RUN chmod +x *.py
+RUN chmod +x *.sh
 
 ########################################################
 ############## Runtime Stage ############################
