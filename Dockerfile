@@ -1,51 +1,41 @@
 ########################################################
 ############## Build Stage #############################
 ########################################################
-FROM eclipse-temurin:22-jre AS build
-
-# Install Python and pip
-RUN apt-get update && apt-get install -y \
-    python3 \
-    python3-pip \
-    --no-install-recommends && \
-    rm -rf /var/lib/apt/lists/*
-
-# Install pip packages
-RUN pip install --no-cache-dir \
-    requests \
-    beautifulsoup4
+FROM eclipse-temurin:23-jre AS build
 
 # Set working directory
 WORKDIR /opt/minecraft
 
-# Copy all Python scripts from your local directory to the Docker image
+# Copy all scripts from your local directory to the Docker image
 COPY *.py ./
+COPY *.sh ./
 
 # Make scripts executable
 RUN chmod +x *.py
-RUN chmod +x .sh
-
-# Run getPaperServer.py to download Paper with API
-RUN python3 /opt/minecraft/getPaperServer.py
 
 ########################################################
 ############## Runtime Stage ############################
 ########################################################
-FROM eclipse-temurin:22-jre AS runtime
+FROM eclipse-temurin:23-jre AS runtime
 ARG TARGETARCH
+
+# Install Python and pip in the runtime image
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-requests \
+    python3-bs4 \
+    --no-install-recommends && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /data
 
-# Copy built jar from the build stage
-COPY --from=build /opt/minecraft/minecraftspigot.jar /opt/minecraft/paperspigot.jar
-
 # Copy Python scripts for plugins from the build stage
-COPY --from=build /opt/minecraft/getGitHubPlugins.py /opt/minecraft/
-COPY --from=build /opt/minecraft/getPlugins.py /opt/minecraft/
+COPY --from=build /opt/minecraft/*.py /opt/minecraft/
 
-# Copy Shell start script
-COPY --from=build /opt/minecraft/startScript.sh /opt/minecraft/
+# Copy Shell start scripts from the build stage
+COPY --from=build /opt/minecraft/*.sh /opt/minecraft/
 
 # Install rcon-cli
 ARG RCON_CLI_VER=1.6.7
@@ -65,7 +55,4 @@ EXPOSE 19132/udp
 # Set working directory
 WORKDIR /data
 
-#Xms: Initial memory allocation pool size
-#Xmx: Maximum memory allocation pool size
-# -Dcom.mojang.eula.agree=true: Automtically accept EULA
-CMD ["./opt/minecraft/startScript.sh"]
+CMD ["/opt/minecraft/startScript.sh"]
